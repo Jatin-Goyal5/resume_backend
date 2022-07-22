@@ -3,9 +3,18 @@ const Skill = require('../../models/skill')
 module.exports = {
     getSkills: async (req, res)=>{
         try{
-            let skill = await Skill.findById({user: req.params.id});
+            if(!req.userData.userId){
+                return  res.status(401).json(
+                    {status:{
+                      code:401,
+                      message:"user Id is not present"
+                    },
+                  }
+                );
+            }
+            let skill = await Skill.find({user: req.userData.userId});
             if(skill.length){
-                res.json({
+              res.status(200).json({
                     status:{
                       message:"successful",
                       code :200,
@@ -13,7 +22,7 @@ module.exports = {
                     data:skill,
                 });
             }else{
-                res.json({
+              res.status(200).json({
                     status:{
                       message:"successful",
                       code :200,
@@ -23,7 +32,7 @@ module.exports = {
             }
         }catch(err){
             console.log(err.message);
-            res.json(
+            res.status(401).json(
                 {status:{
                   code:401,
                   message:err.message

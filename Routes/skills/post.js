@@ -8,10 +8,11 @@ module.exports={
       const skill = new Skill({
         name: req.body.name,
         rating: req.body.rating === null? 0: req.body.rating  ,
-        user: req.body.userId
+        user: req.userData.userId
       })
       const result = await skill.save();
-      res.json({
+      console.log(result);
+      res.status(201).json({
         status:{
           message:"skill created successfully",
           code:201

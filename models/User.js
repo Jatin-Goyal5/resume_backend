@@ -4,23 +4,22 @@ const userSchema = mongoose.Schema({
     email:{
       type:String,
       required:true,
-      unique:true
     },
     password:{
       type:String,
       required:true
     },
-   name:{
-    type: String,
-   },
-   phnNo: {
-    type:String,
-   },
-   about:{
-    type:String,
-   },
-   imgLink:{
-    type:String
-   },  
+    name:{
+      type: String,
+    },
+    contact: {
+      type:String,
+    },
+    location:{
+      type: String,
+    },
+    about:{
+      type:String,
+    }, 
   });
   module.exports = mongoose.model('User',userSchema);

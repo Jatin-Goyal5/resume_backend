@@ -1,26 +1,16 @@
-const User = require('../../Models/User');
+const Project = require('../../models/project')
 
 module.exports = {
-    getUser: async (req, res)=>{
+    getProjects: async (req, res)=>{
         try{
-            if(req.userData == null || req.userData == undefined){
-                return  res.status(401).json(
-                    {status:{
-                      code:401,
-                      message: "Auth Failed"
-                    },
-                  }
-                );
-            }
-            let response = await User.findOne({_id: req.userData.userId});
-            console.log("response", response);
-            if(response){
+            let project = await Project.find({user:req.userData.userId});
+            if(project.length){
                 res.status(200).json({
                     status:{
                       message:"successful",
                       code :200,
                     },
-                    data:response,
+                    data:project,
                 });
             }else{
                 res.status(200).json({

@@ -1,15 +1,16 @@
 const User = require('../../Models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const env = require('../../env/env')
 
 module.exports={
-  login:async (req, res, next)=>{
+  login:async (req, res)=>{
     try{
       const user = await User.findOne({email:req.body.email});
       if(user){
         const isValid =await bcrypt.compare(req.body.password,user.password);
         if(isValid){
-          const token = jwt.sign({email:user.email,userId:user._id},"process.env.JWT_KEY",{expiresIn:"1h"})
+          const token = jwt.sign({email:user.email,userId:user._id},env.jwt_salt,{expiresIn:"1h"})
             return res.json({
               status:{
                 message:"login successful",
@@ -57,13 +58,20 @@ module.exports={
         password: hash,
       })
       const result = await user.save();
-      res.json({
+      console.log(result);
+      const token = jwt.sign({email:result.email,userId:result._id},env.jwt_salt,{expiresIn:"1h"})
+      return res.json({
         status:{
-          message:"user created successfully",
-          code:201
+          message:"signup successful",
+          code:200
         },
-        data: result
+        data:{
+          token:token,
+          expiresIn:3600,
+          userId :result._id
+        }
       })
+      
 
     }catch(e){
       console.log(e.message);

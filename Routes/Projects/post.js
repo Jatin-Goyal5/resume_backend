@@ -3,16 +3,16 @@ const Project = require('../../models/project');
 
 module.exports={
   
-  addSkill: async (req, res)=>{
+  addProject: async (req, res)=>{
     try{
       const project = new Project({
         title: req.body.title,
         description : req.body.description ,
-        user: req.body.userId,
-        technology: req.body.technology,
+        user: req.userData.userId,
+        skills: req.body.skills,
       })
       const result = await project.save();
-      res.json({
+      res.status(201).json({
         status:{
           message:"project created successfully",
           code:201

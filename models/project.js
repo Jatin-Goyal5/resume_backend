@@ -6,7 +6,7 @@ const projectSchema = mongoose.Schema({
     description:{
         type: String,
     },
-    technology: {
+    skills: {
         type: Array,
     },
     user: { type: mongoose.Schema.Types.ObjectId , ref: "User" }

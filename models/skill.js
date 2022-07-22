@@ -4,4 +4,4 @@ const skillSchema = mongoose.Schema({
     rating: {type: Number},
     user: { type: mongoose.Schema.Types.ObjectId , ref: "User" }
   });
-  module.exports = mongoose.model('Project',skillSchema);
+  module.exports = mongoose.model('skill',skillSchema);
